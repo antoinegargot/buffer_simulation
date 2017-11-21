@@ -1,5 +1,6 @@
-#Buffer Simulation
-##*Buffer simulator for Analytic Models and Simulation of Computer Systems*
+# Buffer Simulation
+
+## *Buffer simulator for Analytic Models and Simulation of Computer Systems*
 
 Simulation of a M/M/2/2+5 system (i.e. 2 servers with the common buffer of capacity 5) by means of discrete event simulation. Investigate the following two cases:
   * System A: arrival rate lambda=2, service rate of each server mu=1
