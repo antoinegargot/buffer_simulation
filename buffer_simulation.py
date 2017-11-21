@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plot
 import numpy as np
 from components.systemSimulation import SystemSimulation
+from components.dataVizualiser import DataVizualiser
 
 #1. (15%) Test your random number generator (RNG):
 ##Let's use the numpy library for Python in order to generate random numbers sample.
@@ -40,7 +41,7 @@ n, bins, patches = plot.hist([randomSample1, randomSample2])
 
 #2. (30%) Eliminate the warm-up period separately for each of the following cases by applying the Welch graphical procedure:
 if __name__ == '__main__':
-    simulation_time = 1000#eval(arguments['<time>'])
+    simulation_time = 10#eval(arguments['<time>'])
 #2.1 System A with the initial condition x(t=0)=0, i.e. the system is empty at t=0.
     A1 = SystemSimulation(1, 0, 1, 2, 5)
     customersA1, measuresA1 = A1.main_simulation_loop(simulation_time, measure = True)
@@ -50,13 +51,15 @@ if __name__ == '__main__':
     customersA2, measuresA2 = A2.main_simulation_loop(simulation_time, measure = True)
 
 #2.3 System B with the initial condition x(t=0)=0, i.e. the system is empty at t=0.
-    B1 = SystemSimulation(1, 0, 1, 2, 5)
+    B1 = SystemSimulation(10, 0, 1, 2, 5)
     customersB1, measuresB1 = B1.main_simulation_loop(simulation_time, measure = True)
 
 #2.4 System B with the initial condition x(t=0)=4, i.e. there are 4 customers in the system at t=0.
     B2 = SystemSimulation(10, 4, 1, 2, 5)
     customersB2, measuresB2 = B2.main_simulation_loop(simulation_time, measure = True)
-
+    
 #100 replication per simulation at least.
+    Graph = DataVizualiser()
+    Graph.plot_length(measuresA1)
 
 

@@ -15,4 +15,8 @@ class Queue:
         return (-(1/self.service_rate) * np.log(np.random.uniform(0,1)))
     
     def clean_up_queue(self, time):
-        self.queue = [Customer for Customer in self.queue if Customer.service_end_time > time]
+        self.queue = []
+        for customer in self.queue :
+            if (customer.service_end_time > time) :
+                self.queue.append(customer)
+                

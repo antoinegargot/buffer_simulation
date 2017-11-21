@@ -10,7 +10,9 @@ class Customer:
         next_available_server = queue.next_available_times.index(next_available_time)
 
         self.service_time = queue.service_time()
+
         self.service_start_time = max(self.arrival_time, next_available_time)
+
         self.service_end_time = self.service_start_time + self.service_time
 
         self.wait = self.service_end_time - self.arrival_time
