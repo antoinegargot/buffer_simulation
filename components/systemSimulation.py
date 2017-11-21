@@ -20,7 +20,9 @@ class SystemSimulation():
             self.nb_of_accepted_customers += 1
             self.customers[self.nb_of_accepted_customers] = new_customer 
             new_customer.enter_queue(self.queue)
+            self.queue.clean_up_queue(self.time)
             self.measures[self.time] = Measure(self.customers, self.queue)
+
 
     def main_simulation_loop(self, simulation_time, measure = True):
          #In a Poission process the size of the interval between consecutive events is exponential tx = -To*ln(X).
@@ -32,8 +34,8 @@ class SystemSimulation():
                 self.nb_of_accepted_customers += 1
                 self.customers[self.nb_of_accepted_customers] = new_customer 
                 new_customer.enter_queue(self.queue)
-            else :
-                print("Customer rejected")
+            #else :
+                #print("Customer rejected")
             self.nb_customers += 1
             self.measures[self.time] = Measure(self.customers, self.queue)
         return self.customers, self.measures 
