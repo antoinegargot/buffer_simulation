@@ -8,20 +8,25 @@ from SystemSimulation import SystemSimulation
 
 #1.1 Does your RNG generate random numbers?
 
-##Let's create a sample of 200 random variables in order to check if our RNG generate random numbers
-randomSample = np.random.randn(200)
+##Let's create a sample of 10 000 uniform random variables in order to check if our RNG generate uniform random numbers between 0 and 1
+randomSample =  np.random.uniform(0,1,10000)
 print(randomSample)
 #Our basic configuration of our RNG generate an array of random variable.
 
 #Let's plot our array :
-plot.hist(randomSample)
-plot.title("Random sample Histogram")
+
+plot.hist(randomSample, bins =1000)
+plot.title("Uniform random sample Histogram")
 plot.xlabel("Value")
 plot.ylabel("Frequency")
-fig = plot.gcf()
+plot.show()
 
+#draw the PDF and CDF (CDF should be linear) 
+#By changing seed we will not have the same sample 
+#Bar graph scale (0.001)
 #1.2 How do you initialize the seed of your RNG?
 #The seed is a starting point in a sequence of RNG. We can set it simply by calling the seed function of numpy as bellow :
+#Time is a good way to change the seed.
 np.random.seed(1234)
 
 #1.3 Generate two sequences of 1000000 numbers each, for every sequence use a different seed. Are these two sequences different? How do you know this?
@@ -30,7 +35,8 @@ np.random.seed(4000)
 randomSample2 = np.random.randn(10000)
 n, bins, patches = plot.hist([randomSample1, randomSample2])
 #As the random function is normally distributed and each sample has 10000 observations, the sequence when we start does not affect the global repartission of our data (deterministic behavior).
-#The distribution of those two sample are barely the same for each different simulation due to the previous explanation.
+#The distribution of those two sample are different for each different simulation due to the previous explanation.
+#Find a way to proof the difference between those two samples.
 
 #2. (30%) Eliminate the warm-up period separately for each of the following cases by applying the Welch graphical procedure:
 if __name__ == '__main__':
@@ -51,6 +57,6 @@ if __name__ == '__main__':
     B2 = SimulationModel(10, 4, 1, 2, 5)
     customersB2, snapsB2 = B2.main_simulation_loop(simulation_time, measure = True)
 
-
+#100 replication per simulation at least.
 
 

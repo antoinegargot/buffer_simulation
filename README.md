@@ -30,4 +30,3 @@ For the stationary regions of the Systems A and B identified in item (2) find:
 Find the confidence intervals for (3.1), (3.2) and (3.3). Assume the 90% confidence level. 
 
 
-

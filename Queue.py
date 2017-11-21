@@ -11,7 +11,7 @@ class Queue:
         self.queue = []
 
     def service_time(self):
-        return random.expovariate(self.service_rate)
+        return (-(1/self.service_rate) * np.ln(np.random.uniform(0,1)))
     
     def clean_up_queue(self, time):
         self.queue = [Customer for Customer in self.queue if Customer.service_end_time > time]

@@ -3,6 +3,7 @@
 from Queue import Queue
 from Customer import Customer
 from Measure import Measure
+import numpy as np
 
 class SystemSimulation():
  
@@ -23,7 +24,8 @@ class SystemSimulation():
     def main_simulation_loop(self, simulation_time, measure = True):
         time = 0
         measures = {}
-        
+         #In a Poission process the size of the interval between consecutive events is exponential tx = -To*ln(X).
+        time -= (1/self.arrival_rate) * np.ln(np.random.uniform(0,1))
         while time < simulation_time:
             self.no_of_customers += 1
 
@@ -34,9 +36,7 @@ class SystemSimulation():
                 
                 new_customer.enter_queue(self.queue)
                 self.queue.clean_up_queue(time)
-                
-                #In a Poission process the size of the interval between consecutive events is exponential.
-                time += random.expovariate(self.arrival_rate)
+                time -= (1/self.arrival_rate) * np.ln(np.random.uniform(0,1))
     
                 if measure:
                     measures[time] = Measure(customers, self.queue)
