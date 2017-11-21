@@ -1,4 +1,5 @@
 #Antoine GARGOT - CS 555 - Project
+
 class Customer:
     
     def __init__(self, arrival_time):
