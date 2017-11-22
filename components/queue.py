@@ -16,6 +16,6 @@ class Queue:
     def clean_up_queue(self, time):
         newQueue = []
         for customer in self.queue :
-            if (customer.service_end_time > time) :
+            if (customer.service_end_time >= time) :
                 newQueue.append(customer)
         self.queue = newQueue

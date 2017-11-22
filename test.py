@@ -2,11 +2,14 @@
 from components.welch import WelchAlgorithm
 from components.dataVizualiser import DataVizualiser
 import matplotlib.pyplot as plot
+#from components.systemSimulation import SystemSimulation
 
 if __name__ == '__main__':
     #simulation_time = 100
-    welch = WelchAlgorithm(100, 10, 80)
-    measures, welchMeasure = welch.launch(10, 0, 1, 2, 5)
+    welch = WelchAlgorithm(300, 10, 80)
+    measures, welchMeasure = welch.launch(2, 0, 1, 2, 5)
+    #simulation = SystemSimulation(2, 7, 1, 2, 5)
+    #customers, measures = simulation.main_simulation_loop(80, measure = True)
     #A1 = SystemSimulation(2, 0, 1, 2, 5)
     #customersA1, measuresA1 = A1.main_simulation_loop(simulation_time, measure = True)
     # measures = {}
@@ -23,5 +26,5 @@ if __name__ == '__main__':
     #Graph.plot_length(measuresA1)
     plot.plot(welchMeasure)
     plot.xlabel('Time')
-    plot.ylabel('Length of Queue')
+    plot.ylabel('Customers in the system')
     plot.show()
