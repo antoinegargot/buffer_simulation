@@ -40,7 +40,7 @@ n, bins, patches = plot.hist([randomSample1, randomSample2])
 #Find a way to proof the difference between those two samples.
 
 #2. (30%) Eliminate the warm-up period separately for each of the following cases by applying the Welch graphical procedure:
-if __name__ == '__main__':
+#if __name__ == '__main__':
     simulation_time = 10#eval(arguments['<time>'])
 #2.1 System A with the initial condition x(t=0)=0, i.e. the system is empty at t=0.
     A1 = SystemSimulation(1, 0, 1, 2, 5)
