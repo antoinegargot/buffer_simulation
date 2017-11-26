@@ -22,21 +22,28 @@ class SystemSimulation():
         self.warmmup_period = warmmup_period
         self.batch_size = batch_size
         #simulation_interval for measure is :
-        self.simulation_interval = min(1/self.arrival_rate, 1/self.service_rate)
+        if (self.is_batch):
+            self.simulation_interval = min(1/self.arrival_rate, 1/self.service_rate) + self.warmmup_period
+        else :
+            self.simulation_interval = min(1/self.arrival_rate, 1/self.service_rate)
+
         for i in range(nb_customers):
             new_customer = Customer(0)
             self.nb_of_accepted_customers += 1
             self.customers[self.nb_of_accepted_customers] = new_customer 
             new_customer.enter_queue(self.queue)
             self.queue.clean_up_queue(self.arrival_time)
-        if(not self.is_batch):
-            self.measures[0] = Measure(self.customers, self.queue)
+        if (not self.is_batch):
+            self.measures[0.0] = Measure(self.customers, self.queue)
 
 
     def main_simulation_loop(self, simulation_time, measure = True):
          #In a Poission process the size of the interval between consecutive events is exponential tx = -To*ln(X).
         self.arrival_time -= (1/self.arrival_rate) * np.log(np.random.uniform(0,1))
-        self.batch_measures = []
+        self.batch_measures = {}
+        batch_measure = {}
+        batch_interval = self.batch_size + self.warmmup_period
+        n = 0;
         #Symulation clock with 0.001 accuracy level
         while self.current_time < simulation_time:
             self.queue.clean_up_queue(self.current_time)
@@ -47,23 +54,38 @@ class SystemSimulation():
                     self.nb_of_accepted_customers += 1
                     self.customers[self.nb_of_accepted_customers] = new_customer 
                     new_customer.enter_queue(self.queue)
-                
+
                 self.nb_customers += 1
                 self.arrival_time -= (1/self.arrival_rate) * np.log(np.random.uniform(0,1))
 
-            if (not self.is_batch or (self.is_batch and self.current_time >= self.warmmup_period)):
+            if ((not self.is_batch) or (self.is_batch and (self.current_time >= self.warmmup_period))):
                 if (self.current_time >= self.simulation_interval) :
                     self.measures[self.simulation_interval] = Measure(self.customers, self.queue)
                     self.simulation_interval += min(1/self.arrival_rate, 1/self.service_rate)
 
-            if (self.is_batch and (self.current_time >= self.warmmup_period) and (self.current_time >= self.batch_size)):
-                    self.batch_measures.append([self.measures])
-                    #self.measures = []
+            if (self.is_batch and (self.current_time <= self.warmmup_period)):
+                #Reset counters before captures for batch method
+                self.nb_of_accepted_customers = 0
+                self.nb_customers = 0
+                self.customers = {}
+
+            if (self.is_batch and (self.current_time >= self.warmmup_period) and (self.current_time >= batch_interval)):
+                    batch_measure["measures"] = self.measures
+                    batch_measure["customers"] = self.customers
+                    batch_measure["nb_customers"] = self.nb_customers
+                    self.batch_measures[n] = batch_measure
+                    n += 1
+                    self.measures = {}
+                    batch_measure = {}
                     self.nb_of_accepted_customers = 0
                     self.nb_customers = 0
-                    self.batch_size += self.batch_size
+                    self.customers = {}
+                    batch_interval += self.batch_size
             self.current_time += 0.001
-        return self.customers, self.measures 
+        if (self.is_batch):
+            return self.customers, self.batch_measures
+        else:
+            return self.customers, self.measures 
 
 
 
