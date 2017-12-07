@@ -1,4 +1,5 @@
 # Buffer Simulation
+##Antoine GARGOT - CS 555 - Project
 
 ## *Buffer simulator for Analytic Models and Simulation of Computer Systems*
 
